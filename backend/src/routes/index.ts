@@ -20,9 +20,8 @@ router.get('/crash-test', () => {
 });
 
 // все роуты, кроме /signin и /signup, защищены авторизацией;
-router.use(auth);
-router.use('/users', userRouter);
-router.use('/cards', cardRouter);
+router.use('/users', auth, userRouter);
+router.use('/cards', auth, cardRouter);
 
 router.use((req: Request, res: Response, next: NextFunction) => {
   next(new NotFoundError('Маршрут не найден'));
