@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: '.env.deploy' });
 
 const {
   DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REF = 'origin/master',
@@ -17,7 +17,7 @@ module.exports = {
       ref: DEPLOY_REF,
       repo: 'https://github.com/radiophysiker/nodejs-pm2-deploy.git',
       path: DEPLOY_PATH,
-      'pre-deploy-local': `scp .env.production ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current/backend`,
+      'pre-deploy-local': `scp .env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/current/backend`,
       'post-deploy': 'export PATH=$PATH:~/.nvm/versions/node/v22.11.0/bin && cd backend && npm i && npm run build && pm2 reload ecosystem.config.js --env production',
     },
   },
